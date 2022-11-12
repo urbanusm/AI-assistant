@@ -1,0 +1,221 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - Hi there
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+    - howdy
+    - Hola.
+    - hey, how are you feeling today
+    - how are you holding up?
+    - how are you doing today?
+
+- intent: goodbye
+  examples: |
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+    - catch you later
+    - ciao
+    - cya
+    - farewell
+    - goodnight
+    - gotta go
+    - ok i gtg
+    - byee
+    - quit
+    - stop
+    - Adios
+
+- intent: affirm
+  examples: |
+    - yes
+    - y
+    - indeed
+    - of course
+    - that sounds good
+    - correct
+    - yup
+    - yeah
+    - yes please
+    - yes plz
+    - Sure
+    - Ok
+    - sweet
+    - cool,
+    - yep
+    - yepp
+
+- intent: deny
+  examples: |
+    - no
+    - n
+    - never
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+    - nope
+    - no thanks
+    - I dunno
+    - Nothing!
+    - nevermind
+    - n
+    - i decline
+    - i guess it means - no
+    - i'm afraid not
+    - i'm not sure
+    - i donno
+    - i don't want to
+
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+    - are you real?
+    - are you machine learning?
+    - are you artificial
+    - are you artificial intelligence
+    - whats your real name 
+    - how should i call you
+    - do you have a name?
+    - are you virtual? 
+    - are you virtual Assistant?    
+    - are you an ai?
+    - What do people call you?
+    - Do you have a name for yourself?
+- intent: thankyou
+  examples: |
+    - thank you goodbye
+    - okay thank you goodbye
+    - thank you bye
+    - um okay thank you good bye
+    - thank you
+    - and thats all thank you and good bye
+    - thanks goodbye
+    - thank you and good bye
+    - Thanks!
+    - Awesome, you are a good bot!
+    - great!
+    - I see, thanks
+    - Oh thats good!
+    - it's good :-)
+    - thnaks
+    - good job bot
+    - great
+    - thanks for the help
+    - thanks you
+    - thankyou
+    - thnks
+    - thx
+    - thanks for your information
+
+- intent: transfer_money
+  examples: |
+    - I want to transfer money
+    - I want to pay someone
+    - I wanna transfer money
+    - I wanna  pay someone
+    - can I pay someone
+    - I need to transfer money to a friend
+    - pay my friend
+    - transfer money
+    - can I transfer money to someone ?
+    - I desire send money 
+    - I need to make a transference
+    - I want to make a wire transfer
+    - can I transfer money to my [mom](PERSON)
+    - can I transfer money to [Kyle Njeri](PERSON)?
+    - I would like to send money to [John Mwanzia](PERSON)
+    - Send money to [Urbanus Muthama](PERSON)
+    - Transfer money to [John Kamau](PERSON)
+    - I want to pay [Georgina Mutunga](PERSON) KES 20000 
+    - I want to transfer KES 10000 to [Adan Mohamed](PERSON)
+    - i want to transfer 50000 kenya shillings to [Jane Simon](PERSON)
+    - Money transfer
+    - need to transfer money
+    - Ok pay [Emma Ndanu](PERSON)
+    - I would like to make a payment
+
+- intent: check_balance
+  examples: |
+    - How much money is on my account ?
+    - show me my balance
+    - balance please
+    - show me my account balance
+    - i want check my balance 
+    - i wanna check my balance 
+
+- intent: transfer_charge
+  examples: |
+    - Will I be charged for transferring money
+    - do transfers cost something?
+    - is there a transfer charge?
+    - Is there a charge
+    - will i be charged for a transaction?
+    - do xfers cost something?
+    - is there a transfer fee
+    - is there a xfer fee
+    - how much is the transfer fee
+    - whats the cost of transferring money
+    - what am I charged upon money transfer
+    - are you gonna bill me for this exchange
+    - whats the xfer price for this account
+    - okay but how much to move this money?
+    - how much is the fee to shift my money around
+    - if I send money to someone will I be charged extra for that?
+    - is there a charge when I send money to someone
+    - what is the fee for sending money to someone else
+    - I sent money to my friend will I be charged extra for that
+    - what is the percentage fee for transactions to another person
+    - are there any transaction fees or charges I should know about?
+    - tell me about transfer fees        
+
+- intent: show_statement  
+  examples: |
+    - i want to check my spending history
+    - i want to see my transaction history
+    - I want to search my past transactions
+    - can I search my transaction history
+    - Please show me my bank statement
+    - I would like to see my bank statement
+    - Show me my all my transactions
+    - Give me a list of my statement history
+    - Extract Statements
+    - Print statements
+    - i want to see my statements
+    - Can I have a look at my statement please
+    - Display my statements
+    - I want to see my statement
+    - Please extract statement of my movements
+    - Make a statement
+    - Display Statements
+    - Show statements
+    - Show account movements
+    - Could you show me my statements
+    - I would like to see my statements
+    - Account Transaction overview
+    - Show my account statements
+
