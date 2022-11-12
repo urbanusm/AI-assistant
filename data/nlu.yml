@@ -132,6 +132,140 @@ nlu:
     - thx
     - thanks for your information
 
+- intent: inform
+  examples: |
+    - 5000 kenya shillings
+    - 1000 
+    - KES 1000
+    - 2500
+    - 1500 kenya shillings
+    - 2540
+    - KES 8655 
+    - [tomorrow](date)
+    - [next week](date)
+    - [yesterday](date)
+    - for [today](date)
+    - [last week](date)
+    - the [past month](date)
+    - the [past two days](date)
+    - the [last two weeks](date) 
+    - [full](amount-of-money)
+    - in [full](amount-of-money)
+    - the [full balance](amount-of-money) 
+    - [bill Mambo](PERSON)
+    - [aish juma](PERSON)
+    - [John Kamau](PERSON)
+    - [gary nyioke](PERSON)
+    - [Georgina Mutunga](PERSON)
+    - [Imani Ndogo](PERSON)
+    - [darnell Onyango](PERSON)
+    - [Raymond Muthama](PERSON)
+    - [chenge Maina](PERSON)
+    - to my [brother](PERSON)
+    - to my [sister](PERSON)
+    - my [dad](PERSON)
+    - [11:00 am](time)
+    - [9:00 AM](time)
+    - [2:30 pm](time)
+    - [12 noon](time)
+    - [8:00 am](time)
+    - [1600 hours](time)
+    - [0800 hours](time)
+    - [4:45 PM](time)
+   
+- intent: help
+  examples: |
+    - help
+    - what can you do?
+    - what can I ask you?
+    - what do you do?
+    - what can you help me with?
+    - help me
+    - help, what do you do
+    - how do I use this
+    - how can you help me
+    - What are the things that you can do?
+    - What else can you help me with?
+    - can you do anything else?
+    - can you help me?
+    - come back
+    - cool! can I do something else here?
+    - hello what can you do for me
+    - help
+    - help me
+    - help please
+    - help pls
+    - help?
+    - hep me
+- intent: human_handoff
+  examples: |
+    - handoff
+    - operator
+    - I want a human
+    - can I speak to an agent
+    - real agent please
+    - real human
+    - chat with a live agent
+    - give me a person please
+    - i want to talk to a human
+    - transfer to a human
+    - Please give me to a human
+    - can I talk to human?
+    - can I talk to human
+    - talk to human
+    - i want human :(
+    - can i talk to human
+    - i want to talk to a human
+    - i want to speak to human
+    - can i talk to a real person?
+    - connect me to a real person
+    - I need a real person
+    - can i took with a real person
+    - let me speak to a real person
+    - let me speak to a real person please
+    - i want to talk to a real person
+- intent: out_of_scope
+  examples: |
+    - what is the square root of 5
+    - I want to know the weather
+    - what is the meaning of life.
+    - Fridge Isn't Running
+    - my tv isn't working
+    - I want a pizza
+    - my washing machine isn't working
+    - what year is it
+    - order a pizza
+    - I want to order a pizza
+    - what is the weather today
+    - what is the weather
+    - what the weather today ?
+    - hows the weather
+    - tell me a joke
+    - Can I get a hamburger?
+    - Can YouTube talk?
+    - Can you call me back ?
+    - Can you give me your datacenter's password
+    - Can you give me your datacenter's password?
+    - Can you make sandwiches?
+    - Can you please send me an uber
+    - ofif fsdfafsfs
+    - Who is the president of kenya?
+    - Who won the last goodnight
+    - who is the best actor?
+    - Which is the best car in the market?
+    - Which is the nearest resturant
+
+- intent: interest_rate
+  examples: |
+    - yeah hi what is the current interest rate for loans
+    - what's the interest rate for a 30 year mortgage
+    - what's the availavble interest rate for mortgages today
+    - what's the interest rate for your golden credit cards
+    - what's the interest rate for your credit card
+    - What's the best interest rate I can get within your bank
+    - I need to borrow some money so I want to know the interest rates
+    - What are the interest rates if I ask for one hundred thousand      
+
 - intent: transfer_money
   examples: |
     - I want to transfer money
@@ -156,17 +290,40 @@ nlu:
     - i want to transfer 50000 kenya shillings to [Jane Simon](PERSON)
     - Money transfer
     - need to transfer money
-    - Ok pay [Emma Ndanu](PERSON)
+    - Ok pay [Emma Adhiambo](PERSON)
     - I would like to make a payment
 
 - intent: check_balance
   examples: |
-    - How much money is on my account ?
-    - show me my balance
-    - balance please
-    - show me my account balance
-    - i want check my balance 
-    - i wanna check my balance 
+    - How much money is on my bank account?
+    - what's my [balance](amount-of-money)?
+    - what's my [current balance](amount-of-money)?
+    - What's left on that account?
+    - How much do I have on that account?
+    - What's the [balance](amount-of-money) on that account?
+    - what is my account [balance](amount-of-money)
+    - what's my account [balance](amount-of-money)?
+    - what is my bank account [balance](amount-of-money)
+    - What's my [visa card](debit_card) [balance](amount-of-money)
+    - Show me my [equity gold](debit_card) [balance](amount-of-money)
+    - What's my [equity classic](debit_card) [balance](amount-of-money)
+    - What's the [balance](amount-of-money) on the [mastercard](debit_card) account
+    - what's my [mastercard](debit_card) [balance](amount-of-money)?
+    - what's my [debit card](account_type) [balance](amount-of-money)?
+    - what's my [debit card](account_type) account [balance](amount-of-money)?
+    - What is my [visacard](debit_card) [balance](amount-of-money)?
+    - What is my [visa card](debit_card) [balance](amount-of-money)?
+    - What is my [visa debit card](debit_card) [balance](amount-of-money)?
+    - I should check my [debit card]{"entity": "account_type", "value": "debit"} [balance](amount-of-money) first
+    - check my [debit card]{"entity": "account_type", "value": "debit"} [balance](amount-of-money)
+    - check my [debit card]{"entity": "account_type", "value": "debit"} [balance](amount-of-money) first
+    - Hi, I need to know how much money is in my [checking account](account_type) 
+    - [current balance](amount-of-money) please
+    - show me my [balance](amount-of-money)
+    - [balance](amount-of-money) please
+    - show me my account [balance](amount-of-money)
+    - i want check my [balance](amount-of-money) 
+    - i wanna check my [balance](amount-of-money) 
 
 - intent: transfer_charge
   examples: |
@@ -218,4 +375,19 @@ nlu:
     - I would like to see my statements
     - Account Transaction overview
     - Show my account statements
+
+- synonym: debit
+  examples: |
+    - debit card
+    - debit cards
+    - debit account
+    - debit accounts
+    - card
+    - cards
+    - credit card account
+- synonym: current balance
+  examples: |
+    - balance
+    - full
+    - full balance    
 
