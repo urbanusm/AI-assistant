@@ -2,12 +2,97 @@ version: "3.1"
 
 rules:
 
-- rule: Say goodbye anytime the user says goodbye
+- rule: Confirm that the bot is not a human
+  steps:
+  - intent: bot_challenge
+  - action: utter_bot
+  
+- rule: Ask the user to rephrase whenever they send a message with low NLU confidence
+  steps:
+  - intent: nlu_fallback
+  - action: utter_default
+
+- rule: answer out of scope
+  steps:
+  - intent: out_of_scope
+  - action: utter_out_of_scope
+    
+- rule: greet
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_help
+
+- rule: say goodbye
   steps:
   - intent: goodbye
   - action: utter_goodbye
-
-- rule: Say 'I am a bot' anytime the user challenges
+  
+- rule: help
   steps:
-  - intent: bot_challenge
-  - action: utter_iamabot
+  - intent: help
+  - action: utter_help
+
+- rule: thankyou
+  steps:
+  - intent: thankyou
+  - action: utter_noworries
+  
+- rule: is there a transfer charge
+  steps:
+  - intent: transfer_charge
+  - action: utter_transfer_charge
+  
+- rule: Show balance 
+  steps:
+  - intent: check_balance
+  - action: action_show_balance
+
+- rule: how much is the interest rate
+  steps:
+  - intent: interest_rate
+  - action: utter_interest_rate
+  wait_for_user_input: false
+
+- rule: Activate transfer_money_form when no other form is active
+  condition:
+  # this condition allows stories to handle form switching
+  - active_loop: null
+  steps:
+  - intent: transfer_money
+  - action: transfer_money_form
+  - active_loop: transfer_money_form
+  
+- rule: Activate show_statement_form when no other form is active
+  condition:
+  # this condition allows stories to handle form switching
+  - active_loop: null
+  steps:
+  - intent: show_statement
+  - action: show_statement_form
+  - active_loop: show_statement_form
+  
+- rule: Submit transfer_money_form while not switched from previous form
+  condition:
+  - active_loop: transfer_money_form
+  - slot_was_set:
+    - previous_form_name: null
+  steps:
+  - action: transfer_money_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_transfer_money
+  
+- rule: Submit show_statement_form while not switched from previous form
+  condition:
+  - active_loop: show_statement_form
+  - slot_was_set:
+    - previous_form_name: null
+  steps:
+  - action: show_statement_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_show_statement
+

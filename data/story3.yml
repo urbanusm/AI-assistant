@@ -1,0 +1,167 @@
+version: "3.1"
+ 
+stories:
+
+- story: transfer money happy path w/o recipient
+  steps:
+  - intent: transfer_money
+  - action: transfer_money_form
+  - active_loop: transfer_money_form
+  - active_loop: null
+  - action: action_transfer_money
+  
+- story: transfer money happy path w/ recipient
+  steps:
+  - intent: transfer_money
+  - slot_was_set:
+    - PERSON: Urbanus Muthama
+  - action: transfer_money_form
+  - active_loop: transfer_money_form
+  - active_loop: null
+  - action: action_transfer_money
+  
+- story: show statement happy path
+  steps:
+  - intent: show_statement
+  - action: show_statement_form
+  - active_loop: show_statement_form
+  - active_loop: null
+  - action: action_show_statement
+
+
+- story: show statement happy path
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_help
+  - intent: show_statement
+  - action: show_statement_form
+  - active_loop: show_statement_form
+  - active_loop: null
+  - action: action_show_statement
+  - intent: thankyou
+  - action: utter_noworries
+
+- story: check balance happy path
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_help
+  - intent: check_balance
+  - action: action_show_balance  
+
+- story: Show bank account balance + transfer money
+  steps:
+  - intent: check_balance
+  - action: action_show_balance
+  - intent: transfer_money
+  - action: transfer_money_form
+  - active_loop: transfer_money_form
+  - active_loop: null
+  - action: action_transfer_money
+  - intent: thankyou
+  - action: utter_noworries
+  
+- story: Show bank account balance or thankyou + ok + transfer money
+  steps:
+  - intent: check_balance
+  - action: action_show_balance
+  - or:
+    - intent: affirm  
+    - intent: thankyou
+  - action: utter_noworries
+  - intent: transfer_money
+  - action: transfer_money_form
+  - active_loop: transfer_money_form
+  - active_loop: null
+  - action: action_transfer_money
+
+- story: Show bank account balance +  ok + show transfer charge + ok + transfer money
+  steps:
+  - intent: check_balance
+  - action: action_show_balance
+  - intent: affirm
+  - action: utter_ok
+  - intent: transfer_charge
+  - action: utter_transfer_charge
+  - intent: affirm
+  - action: utter_ok
+  - intent: transfer_money
+  - action: transfer_money_form
+  - active_loop: transfer_money_form
+  - active_loop: null
+  - action: action_transfer_money
+
+- story: transfer money, while in form ask balance
+  steps:
+  - intent: transfer_money
+  - action: transfer_money_form
+  - active_loop: transfer_money_form
+  - intent: check_balance
+  - action: action_show_balance
+  - action: transfer_money_form
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_transfer_money
+  
+- story: show statement + switch to transfer money, deny
+  steps:
+  - intent: show_statement
+  - action: show_statement_form
+  - active_loop: show_statement_form
+  - intent: transfer_money
+  - action: action_switch_forms_ask
+  - slot_was_set:
+    - next_form_name: transfer_money_form
+  - intent: deny
+  - action: action_switch_forms_deny
+  - slot_was_set:
+    - next_form_name: null
+  - action: show_statement_form
+  - active_loop: show_statement_form  
+  
+- story: transfer money + switch to show statement, deny
+  steps:
+  - intent: transfer_money
+  - action: transfer_money_form
+  - active_loop: transfer_money_form
+  - intent: show_statement
+  - action: action_switch_forms_ask
+  - slot_was_set:
+    - next_form_name: show_statement_form
+  - intent: deny
+  - action: action_switch_forms_deny
+  - slot_was_set:
+    - next_form_name: null
+  - action: transfer_money_form
+  - active_loop: transfer_money_form
+      
+- story: providing a name must be inform intent
+  steps:
+  - intent: transfer_money
+  - action: transfer_money_form
+  - active_loop: transfer_money_form
+  - slot_was_set:
+    - requested_slot: PERSON
+  - intent: inform
+  - slot_was_set:
+    - requested_slot: amount-of-money
+  - action: transfer_money_form
+
+- story: check balance + ask show statement
+  steps:
+  - intent: check_balance
+  - action: action_show_balance
+  - or:
+    - intent: show_statement
+  - action: show_statement_form
+  - active_loop: show_statement_form
+ 
+- story: check balance + transfer money
+  steps:
+  - intent: check_balance
+  - action: action_show_balance
+  - intent: transfer_money
+  - action: transfer_money_form
+  - active_loop: transfer_money_form     

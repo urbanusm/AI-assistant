@@ -1,0 +1,76 @@
+version: "3.1"
+
+stories:
+
+- story: transfer money + switch to show statement, deny
+  steps:
+  - intent: transfer_money
+  - action: transfer_money_form
+  - active_loop: transfer_money_form
+  - intent: show_statement
+  - action: action_switch_forms_ask
+  - slot_was_set:
+    - next_form_name: another form
+  - intent: deny
+  - action: action_switch_forms_deny
+  - slot_was_set:
+    - next_form_name: null
+  - action: transfer_money_form
+  - active_loop: transfer_money_form
+
+- story: transfer money + switch to show statement, affirm + switch back, deny
+  steps:
+  - intent: transfer_money
+  - action: transfer_money_form
+  - active_loop: transfer_money_form
+  - intent: show_statement
+  - action: action_switch_forms_ask
+  - slot_was_set:
+    - next_form_name: show_statement_form
+  - intent: affirm
+  - action: action_switch_forms_affirm
+  - slot_was_set:
+    - next_form_name: null
+  - slot_was_set:
+    - previous_form_name: transfer_money_form
+  - action: show_statement_form
+  - active_loop: show_statement_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_show_statement
+  - action: action_switch_back_ask
+  - slot_was_set:
+    - previous_form_name: null
+  - intent: deny
+  - action: utter_ask_whatelse
+  
+- story: transfer money+ switch to show statement, affirm + switch back, affirm
+  steps:
+  - intent: transfer_money
+  - action: transfer_money_form
+  - active_loop: transfer_money_form
+  - intent: show_statement
+  - action: action_switch_forms_ask
+  - slot_was_set:
+    - next_form_name: show_statement_form
+  - intent: affirm
+  - action: action_switch_forms_affirm
+  - slot_was_set:
+    - next_form_name: null
+  - slot_was_set:
+    - previous_form_name: transfer_money_form
+  - action: show_statement_form
+  - active_loop: show_statement_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_show_statement
+  - action: action_switch_back_ask
+  - slot_was_set:
+    - previous_form_name: null
+  - intent: affirm
+  - action: transfer_money_form
+  - active_loop: transfer_money_form
+
+

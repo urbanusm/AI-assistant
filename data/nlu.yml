@@ -352,24 +352,24 @@ nlu:
 
 - intent: show_statement  
   examples: |
-    - i want to check my spending history
-    - i want to see my transaction history
-    - I want to search my past transactions
-    - can I search my transaction history
-    - Please show me my bank statement
-    - I would like to see my bank statement
-    - Show me my all my transactions
+    - i want to check my spending history for [last week](date)
+    - i want to see my transaction history over [last year](date)
+    - I want to search my past transactions 
+    - can I search my transaction history in [January](date)
+    - Please show me my bank statement 
+    - I would like to see my bank statement [last month](date)?
+    - Show me my all my transactions 
     - Give me a list of my statement history
-    - Extract Statements
+    - Extract Statement for the [last two weeks](date)?
     - Print statements
-    - i want to see my statements
-    - Can I have a look at my statement please
+    - i want to see my statements for [last month](date)?
+    - Can I have a look at my statement please from [April](date)?
     - Display my statements
     - I want to see my statement
     - Please extract statement of my movements
-    - Make a statement
+    - Make a statement from [June](date)
     - Display Statements
-    - Show statements
+    - Show statements form the [past one year](date)
     - Show account movements
     - Could you show me my statements
     - I would like to see my statements

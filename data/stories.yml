@@ -2,29 +2,109 @@ version: "3.1"
 
 stories:
 
-- story: happy path
+- story: asking bot
   steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_great
-  - action: utter_happy
+  - intent: bot_challenge  
+  - action: utter_bot
 
-- story: sad path 1
+- story: fallback
+  steps: 
+  - intent: nlu_fallback  
+  - action: utter_default    
+
+- story: say ok when user affirms after utter_help
   steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
+  - action: utter_help
   - intent: affirm
-  - action: utter_happy
+  - action: utter_ok  
 
-- story: sad path 2
+- story: say ok when user affirms after action_show_balance
+  steps:
+  - action: action_show_balance
+  - intent: affirm
+  - action: utter_ok
+  
+- story: say ok when user affirms after utter_transfer_charge
+  steps:
+  - action: utter_transfer_charge
+  - intent: affirm
+  - action: utter_ok
+  
+- story: greet/bye path
   steps:
   - intent: greet
   - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: deny
+  - action: utter_help
+  - intent: goodbye
   - action: utter_goodbye
+
+- story: say goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: help
+  steps:
+  - intent: help
+  - action: utter_help
+  
+- story: is there a transfer charge
+  steps:
+  - intent: transfer_charge
+  - action: utter_transfer_charge
+  
+- story: Show bank account balance
+  steps:
+  - intent: check_balance
+  - action: action_show_balance
+
+- story: help2
+  steps:
+  - intent: help
+  - action: utter_help
+  - intent: greet
+  - action: utter_greet
+  - action: utter_help
+  - intent: thankyou
+  - action: utter_noworries
+
+- story: help3
+  steps:
+  - intent: help
+  - action: utter_help
+  - intent: greet
+  - action: utter_greet
+  - action: utter_help
+  - intent: affirm
+  - action: utter_ok
+
+- story: interest rate
+  steps:
+  - intent: interest_rate
+  - action: utter_interest_rate
+  - action: utter_ask_whatelse
+  - or:
+    - intent: show_balance 
+  - action: action_show_balance
+
+- story: interest rate2
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_help
+  - intent: interest_rate
+  - action: utter_interest_rate
+  - action: utter_ask_whatelse
+  - intent: check_balance
+  - action: action_show_balance
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: interest rate3 
+  steps:
+  - intent: interest_rate
+  - action: utter_interest_rate
+  - action: utter_ask_whatelse
+  - or:
+    - intent: show_balance
+  - action: action_show_balance

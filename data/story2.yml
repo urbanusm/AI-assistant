@@ -1,0 +1,75 @@
+version: "3.1"
+
+stories:
+
+- story: show statement + switch to transfer money, deny
+  steps:
+  - intent: show_statement
+  - action: show_statement_form
+  - active_loop: show_statement_form
+  - intent: transfer_money
+  - action: action_switch_forms_ask
+  - slot_was_set:
+    - next_form_name: another form
+  - intent: deny
+  - action: action_switch_forms_deny
+  - slot_was_set:
+    - next_form_name: null
+  - action: show_statement_form
+  - active_loop: show_statement_form
+  
+- story: show statement + switch to transfer money, affirm + switch back, deny
+  steps:
+  - intent: show_statement
+  - action: show_statement_form
+  - active_loop: show_statement_form
+  - intent: transfer_money
+  - action: action_switch_forms_ask
+  - slot_was_set:
+    - next_form_name: transfer_money_form
+  - intent: affirm
+  - action: action_switch_forms_affirm
+  - slot_was_set:
+    - next_form_name: null
+  - slot_was_set:
+    - previous_form_name: show_statement_form
+  - action: transfer_money_form
+  - active_loop: transfer_money_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_transfer_money
+  - action: action_switch_back_ask
+  - slot_was_set:
+    - previous_form_name: null
+  - intent: deny
+  - action: utter_ask_whatelse
+  
+- story: show statement + switch to transfer money, affirm + switch back, affirm
+  steps:
+  - intent: show_statement
+  - action: show_statement_form
+  - active_loop: show_statement_form
+  - intent: transfer_money
+  - action: action_switch_forms_ask
+  - slot_was_set:
+    - next_form_name: transfer_money_form
+  - intent: affirm
+  - action: action_switch_forms_affirm
+  - slot_was_set:
+    - next_form_name: null
+  - slot_was_set:
+    - previous_form_name: show_statement_form
+  - action: transfer_money_form
+  - active_loop: transfer_money_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_transfer_money
+  - action: action_switch_back_ask
+  - slot_was_set:
+    - previous_form_name: null
+  - intent: affirm
+  - action: show_statement_form
+  - active_loop: show_statement_form
+  

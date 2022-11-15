@@ -1,0 +1,12 @@
+{
+  "debit card": "debit",
+  "debit cards": "debit",
+  "debit account": "debit",
+  "debit accounts": "debit",
+  "card": "debit",
+  "cards": "debit",
+  "credit card account": "debit",
+  "balance": "current balance",
+  "full": "current balance",
+  "full balance": "current balance"
+}

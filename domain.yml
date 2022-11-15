@@ -1,34 +1,414 @@
 version: "3.1"
-
-intents:
-  - greet
-  - goodbye
-  - affirm
-  - deny
-  - mood_great
-  - mood_unhappy
-  - bot_challenge
-
-responses:
-  utter_greet:
-  - text: "Hey! How are you?"
-
-  utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
-
-  utter_did_that_help:
-  - text: "Did that help you?"
-
-  utter_happy:
-  - text: "Great, carry on!"
-
-  utter_goodbye:
-  - text: "Bye"
-
-  utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
-
 session_config:
-  session_expiration_time: 60
+  session_expiration_time: 0
   carry_over_slots_to_new_session: true
+intents:
+- bot_challenge
+- transfer_money:
+    use_entities: []
+- inform
+- greet
+- goodbye
+- affirm
+- deny
+- thankyou
+- transfer_charge
+- show_statement
+- check_balance:
+    use_entities:
+    - debit_card
+    - account_type
+- interest_rate
+- out_of_scope
+- session_start
+- restart
+- trigger_handoff
+- handoff
+- human_handoff
+- help
+- nlu_fallback
+entities:
+- amount-of-money
+- debit_card
+- payment_date 
+- time
+- date
+- PERSON
+- number
+- account_type
+- handoff_to
+- search_type
+slots:
+  AA_CONTINUE_FORM:
+    type: any
+    influence_conversation: false
+    mappings:
+    - intent: affirm
+      type: from_intent
+      value: yes
+      conditions:
+      - active_loop: transfer_money_form
+        requested_slot: AA_CONTINUE_FORM
+      - active_loop: show_statement_form
+        requested_slot: AA_CONTINUE_FORM
+    - intent: deny
+      type: from_intent
+      value: no
+      conditions:
+      - active_loop: transfer_money_form
+        requested_slot: AA_CONTINUE_FORM
+      - active_loop: show_statement_form
+        requested_slot: AA_CONTINUE_FORM
+    - intent:
+      - inform
+      - transfer_money_form
+      type: from_text
+      conditions:
+      - active_loop: transfer_money_form
+        requested_slot: AA_CONTINUE_FORM
+    - intent:
+      - inform
+      - show_statement_form
+      type: from_text
+      conditions:
+      - active_loop: show_statement_form
+        requested_slot: AA_CONTINUE_FORM
+  PERSON:
+    type: any
+    influence_conversation: false
+    mappings:
+    - entity: PERSON
+      type: from_entity
+      conditions:
+      - active_loop: transfer_money_form
+        requested_slot: PERSON
+    - intent:
+      - inform
+      - transfer_money_form
+      type: from_text
+      conditions:
+      - active_loop: transfer_money_form
+        requested_slot: PERSON
+    - type: from_entity
+      entity: PERSON
+  account_type:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: account_type
+  amount-of-money:
+    type: any
+    influence_conversation: false
+    mappings:
+    - entity: amount-of-money
+      not_intent:
+      - check_balance
+      type: from_entity
+      conditions:
+      - active_loop: transfer_money_form
+        requested_slot: amount-of-money
+    - entity: number
+      not_intent:
+      - check_balance
+      type: from_entity
+      conditions:
+      - active_loop: transfer_money_form
+        requested_slot: amount-of-money
+    - intent:
+      - inform
+      - transfer_money_form
+      type: from_text
+      conditions:
+      - active_loop: transfer_money_form
+        requested_slot: amount-of-money
+    - type: from_entity
+      entity: amount-of-money
+  amount_transferred:
+    type: any
+    initial_value: 0
+    influence_conversation: false
+    mappings:
+    - type: custom
+  currency:
+    type: any
+    influence_conversation: false
+    initial_value: "KES."
+    mappings:
+    - type: custom
+  end_time:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: custom
+  end_time_formatted:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: custom
+  grain:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: custom
+  handoff_to:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: handoff_to
+  next_form_name:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: custom
+  number:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: number
+  payment_amount_type:
+    type: any
+    initial_value: ''
+    influence_conversation: false
+    mappings:
+    - type: custom
+  previous_form_name:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: custom
+  repeated_validation_failures:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: custom
+  requested_slot:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: custom
+  search_type:
+    type: any
+    influence_conversation: false
+    mappings:
+    - intent: show_statement
+      type: from_trigger_intent
+      value: spend
+    - type: from_entity
+      entity: search_type
+      conditions:
+      - active_loop: show_statement_form
+    - type: from_entity
+      entity: search_type
+  start_time:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: custom
+  start_time_formatted:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: custom
+  time:
+    type: any
+    influence_conversation: false
+    mappings:
+    - entity: time
+      type: from_entity
+      conditions:
+      - active_loop: show_statement_form
+        requested_slot: time
+    - intent:
+      - inform
+      - show_statement_form
+      type: from_text
+      conditions:
+      - active_loop: show_statement_form
+        requested_slot: time
+    - type: from_entity
+      entity: time
+  time_formatted:
+    type: any
+    influence_conversation: false
+    mappings:
+    - type: custom
+  zz_confirm_form:
+    type: any
+    influence_conversation: false
+    mappings:
+    - intent: affirm
+      type: from_intent
+      value: yes
+      conditions:
+      - active_loop: transfer_money_form
+        requested_slot: zz_confirm_form
+      - active_loop: show_statement_form
+        requested_slot: zz_confirm_form
+    - intent: deny
+      type: from_intent
+      value: no
+      conditions:
+      - active_loop: transfer_money_form
+        requested_slot: zz_confirm_form
+      - active_loop: show_statement_form
+        requested_slot: zz_confirm_form
+    - intent:
+      - inform
+      - transfer_money_form
+      type: from_text
+      conditions:
+      - active_loop: transfer_money_form
+        requested_slot: zz_confirm_form
+    - intent:
+      - inform
+      - show_statement_form
+      type: from_text
+      conditions:
+      - active_loop: show_statement_form
+        requested_slot: zz_confirm_form
+responses:
+  utter_out_of_scope:
+  - text: Sorry, I'm not sure how to respond to that. kindly rephrase your statement.
+  - text: sorry, I'm not sure how to respond to that. Could you please rephrase your statement.
+  utter_ask_transfer_money_form_amount-of-money:
+  - text: How much money do you want to transfer?
+  utter_ask_transfer_money_form_PERSON:
+  - text: Who do you want to transfer money to?
+  utter_goodbye:
+  - text: Bye
+  - text: see you
+  utter_noworries:
+  - text: You're welcome :)
+  utter_transfer_complete:
+  - text: Successfully transferred {currency}{amount-of-money} to {PERSON}.
+  utter_transfer_charge:
+  - text: "This is how we charge per transaction: \n- From KES 1 - KES 100 is free. \n- KES 101 - KES 1000 you're charged KES 10. \n- KES 1001 - KES 5000 you're charged KES 25. \n- KES 5001 - KES 15000 you're charged KES 65. \n- KES 15001 - KES 50000 you're charged KES 150. \n- KES 50001 - KES 150000 you're charged KES 250. \n- Above KES 150000 kindly visit the nearest bank for over the counter withdrawal."
+  utter_ask_check_balance_form_account_type:
+  - text: Which account would you like to check your balance?  
+  utter_ask_show_statement_form_time:
+  - text: In which timeframe would you like to see your bank statement?
+  - text: From which dates would you like to see your bank statement?     
+  utter_no_payment_amount:
+  - text: Sorry, I don't understand that payment amount.
+  utter_no_paymentdate:
+  - text: Sorry, that is not a valid payment date.
+  utter_no_debitcard:
+  - text: Sorry, that is not a valid debit card account to make payments towards.
+  utter_no_transactdate:
+  - text: Sorry, that's not a recognized time frame.
+  utter_searching_spendings_transactions:
+  - text: Searching spendings made from your account between {start_time_formatted} and {end_time_formatted}...
+  utter_found_spendings_transactions:
+  - text: I found {numtransacts} spendings made from your account totalling {currency}{total}
+  utter_ask_rephrase:
+  - text: I didn't quite understand that. Could you rephrase please?
+  utter_ok:
+  - text: 👍
+  - text: cool 👍
+  utter_ask_continue:
+  - text: Would you like to continue?
+  utter_default:
+  - text: I didn't quite understand that. Could you rephrase?
+  - text: Sorry, I didn't get that 🤷. Could you please rephrase?
+  - text: I didn't understand, could you rephrase that?
+  - text: I'm sorry, but I didn't understand you. Could you please rephrase what you just said?    
+  - text: I'm afraid I didn't get what you just said. Could you rephrase that?
+  - text: I didn't quite get that, could you rephrase your message?
+  - text: Could you rephrase your message? I didn't get it, I'm sorry.  
+  utter_ask_transfer_money_form_AA_CONTINUE_FORM:
+  - buttons:
+    - payload: /affirm
+      title: Yes
+    - payload: /deny
+      title: No, cancel the transfer
+    text: Would you like to continue scheduling the money transfer?
+  utter_ask_show_statement_form_AA_CONTINUE_FORM:
+  - buttons:
+    - payload: /affirm
+      title: Yes
+    - payload: /deny
+      title: No, cancel the statement
+    text: Would you like to continue the statement search?
+  utter_ask_transfer_money_form_zz_confirm_form:
+  - buttons:
+    - payload: /affirm
+      title: Yes
+    - payload: /deny
+      title: No, cancel the transaction
+    text: Would you like to transfer {currency}{amount-of-money} to {PERSON}?
+  utter_ask_show_statement_zz_confirm_form:
+  - buttons:
+    - payload: /affirm
+      title: Yes
+    - payload: /deny
+      title: No, cancel the statement
+    text: Would you like to search the statement search?  
+  utter_transfer_cancelled:
+  - text: Transfer cancelled.
+  utter_show_statement_cancelled:
+  - text: Show statement has been cancelled.
+  utter_interest_rate:
+  - text: We charge 8.25% per annum for any borrowed funds from our bank.  
+  utter_account_balance:
+  - text: Your bank account balance is {currency}{init_account_balance}.
+  utter_changed_account_balance:
+  - text: Your bank account balance was {currency}{init_account_balance} and is now {currency}{account_balance} after transfers and payments.
+  utter_insufficient_funds:
+  - text: Sorry, you don't have enough money to do that!
+  utter_insufficient_funds_specific:
+  - text: The {payment_amount_type} on your {debit_card} debit card is {amount-of-money}, so you have insufficient funds to pay it off.
+  utter_debit_card_balance:
+  - text: The current balance for your {debit_card} account is {currency}{debit_card_balance}..
+  utter_greet:
+  - text: Hey!😊 Great to see you here. I’m your Financial Assistant. 
+  - text: Hi! I'm your Financial Assistant! 
+  - text: Hello! I am your Financial Assistant.    
+  utter_ask_handoff:
+  - text: It looks like you want to be transferred to a human agent.
+  utter_handoff:
+  - text: Alright, I'll try to transfer you.
+  utter_wouldve_handed_off:
+  - text: If you were talking to me via chatroom, I would have handed you off to {handoffhost}.
+  utter_no_handoff:
+  - text: Since you haven't configured a host to hand off to, I can't send you anywhere!
+  utter_ask_whatelse:
+  - text: What else can I help you with?
+  utter_bot:
+  - text: I am a virtual assistant made with Artificial Intelligence but no need to worry, you can chat with me as you chat with a human.
+  utter_help:
+  - text: "I can help you with your financial accounts. \nYou can ask me things like: \n- What's my account balance? \n- Show me my bank statement? \n- I need to transfer money"
+actions:
+- action_session_start
+- action_restart
+- action_show_balance
+- action_show_recipients
+- action_handoff
+- action_handoff_options
+- action_transfer_money
+- action_switch_forms_ask
+- action_switch_forms_deny
+- action_switch_forms_affirm
+- action_switch_back_ask
+- action_interest_rate
+- action_show_statement
+- action_show_debit_cards
+- action_show_accounts
+- validate_transfer_money_form
+- validate_show_statement_form
+forms:
+  transfer_money_form:
+    ignored_intents: []
+    required_slots:
+    - AA_CONTINUE_FORM
+    - PERSON
+    - amount-of-money
+    - zz_confirm_form
+  show_statement_form:
+    ignored_intents: []
+    required_slots:
+    - AA_CONTINUE_FORM
+    - time
+    - zz_confirm_form
